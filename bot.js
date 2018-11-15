@@ -57,29 +57,39 @@ client.on("message", (message) => {
  
 });
 
-
-
-
-
+const adminprefix = ".";
+const devs = ['481213742109949972','383711936174620672'];
 client.on('message', message => {
-    if (!message.channel.guild) return;
-    if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply("***  ليس معك صلاحيات  ***")
-    var prefix = ".";
-       if (message.content ===   prefix + "add role") { // اعطا جميع الاعضاء رتبة
-    message.channel.send("<@" + message.author.id + ">  ***  جاري اعطاء الرتبة للاعضاء كما امرت  *** ")
-    message.guild.members.forEach(m => {
-    m.addRole(message.guild.roles.find('name', 'اسم الرتبة'))
-    })
-    }
+  var argresult = message.content.split(` `).slice(1).join(' ');
+    if (!devs.includes(message.author.id)) return;
     
-       if (message.content ===   prefix + "remove role") {
-    message.channel.send("<@" + message.author.id + ">  ***  جاري اعطاء الرتبة للاعضاء كما امرت  *** ")
-    message.guild.members.forEach(m => {
-    m.removeRole(message.guild.roles.find('name', 'اسم الرتبة'))
-    })
-    }
-    
-    });
-    
+if (message.content.startsWith(adminprefix + 'ply')) {
+  client.user.setGame(argresult);
+    message.channel.sendMessage(`**✅   ${argresult}**`)
+} else 
+  if (message.content.startsWith(adminprefix + 'setname')) {
+client.user.setUsername(argresult).then
+    message.channel.sendMessage(`**${argresult}** : تم تغيير الأسم إلى`)
+return message.reply("**لا يمكنك تغيير الاسم يجب عليك الانتظآر لمدة ساعتين . **");
+} else
+  if (message.content.startsWith(adminprefix + 'setavatar')) {
+client.user.setAvatar(argresult);
+  message.channel.sendMessage(`**${argresult}** : تم تغير الصورة `);
+      } else     
+if (message.content.startsWith(adminprefix + 'st')) {
+  client.user.setGame(argresult, "https://www.twitch.tv/idk");
+    message.channel.sendMessage(`**✅     ${argresult}**`)
+      } else
+  if (message.content.startsWith(adminprefix + 'wt')) {
+  client.user.setActivity(argresult, {type:'WATCHING'});
+      message.channel.sendMessage(`**✅   ${argresult}**`)
+  } else 
+  if (message.content.startsWith(adminprefix + 'ls')) {
+  client.user.setActivity(argresult , {type:'LISTENING'});
+      message.channel.sendMessage(`**✅   ${argresult}**`)
+ }
+});
 
-    client.login(process.env.BOT_TOKEN);
+
+
+client.login(process.env.BOT_TOKEN);
